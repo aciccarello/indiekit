@@ -19,6 +19,28 @@ export const HugoPreset = class {
   get info() {
     return {
       name: "Hugo",
+      pluginPrompts: [
+        {
+          type: "select",
+          name: "frontMatterFormat",
+          message: "Which frontmatter format are you using?",
+          choices: [
+            {
+              title: "JSON",
+              value: "json",
+            },
+            {
+              title: "TOML",
+              value: "toml",
+            },
+            {
+              title: "YAML",
+              value: "yaml",
+            },
+          ],
+          initial: 2,
+        },
+      ],
     };
   }
 

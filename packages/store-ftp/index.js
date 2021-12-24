@@ -28,6 +28,23 @@ export const FtpStore = class {
     return {
       name: `${user} on ${host}`,
       uid: `sftp://${host}/${directory}`,
+      pluginPrompts: [
+        {
+          type: "text",
+          name: "host",
+          message: "Where is your FTP server hosted?",
+        },
+        {
+          type: "text",
+          name: "user",
+          message: "What is your FTP username?",
+        },
+        {
+          type: "text",
+          name: "directory",
+          message: "Which directory do you want to save files in?",
+        },
+      ],
     };
   }
 

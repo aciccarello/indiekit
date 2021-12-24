@@ -46,6 +46,18 @@ export const MastodonSyndicator = class {
         name: user,
         url: uid,
       },
+      pluginPrompts: [
+        {
+          type: "text",
+          name: "url",
+          message: "What is the URL of your Mastodon server?",
+        },
+        {
+          type: "text",
+          name: "user",
+          message: "What is your Mastodon username (without the @)?",
+        },
+      ],
     };
   }
 

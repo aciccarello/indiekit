@@ -25,6 +25,30 @@ export const GiteaStore = class {
     return {
       name: `${user}/${repo} on Gitea`,
       uid: `${instance}/${user}/${repo}`,
+      pluginPrompts: [
+        {
+          type: "text",
+          name: "instance",
+          message: "Where is Gitea hosted?",
+          initial: defaults.instance,
+        },
+        {
+          type: "text",
+          name: "user",
+          message: "What is your Gitea username?",
+        },
+        {
+          type: "text",
+          name: "repo",
+          message: "Which repository is your publication stored on?",
+        },
+        {
+          type: "text",
+          name: "branch",
+          message: "Which branch are you publishing from?",
+          initial: defaults.branch,
+        },
+      ],
     };
   }
 

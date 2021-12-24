@@ -23,6 +23,24 @@ export const BitbucketStore = class {
     return {
       name: `${user}/${repo} on Bitbucket`,
       uid: `https://bitbucket.org/${user}/${repo}`,
+      pluginPrompts: [
+        {
+          type: "text",
+          name: "user",
+          message: "What is your Bitbucket username?",
+        },
+        {
+          type: "text",
+          name: "repo",
+          message: "Which repository is your publication stored on?",
+        },
+        {
+          type: "text",
+          name: "branch",
+          message: "Which branch are you publishing from?",
+          initial: defaults.branch,
+        },
+      ],
     };
   }
 

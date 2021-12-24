@@ -37,6 +37,13 @@ export const TwitterSyndicator = class {
         name: user,
         url: `https://twitter.com/${user}`,
       },
+      pluginPrompts: [
+        {
+          type: "text",
+          name: "user",
+          message: "What is your Twitter username?",
+        },
+      ],
     };
   }
 
