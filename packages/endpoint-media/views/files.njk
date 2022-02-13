@@ -2,19 +2,25 @@
 {% extends "document.njk" %}
 
 {% block content %}
-{%- if files %}
-  <ol class="no-bullets">
-  {%- for item in files | reverse %}
-    <li>
-      {{ file({
-        title: item.properties.filename,
-        href: parentUrl + item._id,
-        icon: item.properties["post-type"],
-        meta: item.properties.url
-      }) }}
-    </li>
-  {%- endfor %}
-  </ol>
+  {%- if files %}
+  {{ fileGrid({
+    items: files
+  }) }}
+  {{ pagination({
+    items: items,
+    previous: {
+      href: previous.href
+    } if previous,
+    next: {
+      href: next.href
+    } if next,
+    results: {
+      from: results.from,
+      to: results.to,
+      count: results.count,
+      type: "files"
+    }
+  }) }}
 {%- else -%}
   <p>{{ __("media.files.none") }}<p>
 {%- endif %}
