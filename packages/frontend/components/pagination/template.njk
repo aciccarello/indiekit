@@ -1,0 +1,62 @@
+{% set type = params.results.type | default("results") -%}
+<nav class="pagination{{- " " + params.classes if params.classes }}" id="pagination-label" aria-label="{{ type }} navigation">
+  <ul class="pagination__list">
+    {%- if params.previous %}
+    <li class="pagination__item pagination__item--previous">
+      <a class="pagination__link" href="{{ params.previous.href }}">
+        <span class="pagination__link-title">
+          {{- icon("previous") -}}
+          {%- if params.previous.text %}{{ params.previous.text -}}
+          {%- else %}Previous<span class="visually-hidden"> page</span>
+          {%- endif -%}
+        </span>
+        {%- if params.previous.label %}
+        <span class="pagination__link-divider visually-hidden">:</span>
+        <span class="pagination__link-label">{{ params.previous.label }}</span>
+        {% endif -%}
+      </a>
+    </li>
+    {% endif -%}
+
+    {%- for item in params.items %}
+    {%- if item.divider %}
+    <li class="pagination__item pagination__item--divider">
+      {{ item.divider or "…" }}
+    </li>
+    {% else %}
+    {%- if item.current %}
+    <li class="pagination__item pagination__item--current">
+      <span class="visually-hidden">Page </span>{{ item.text }}<span class="visually-hidden"> (current page)</span>
+    </li>
+    {%- else %}
+    <li class="pagination__item">
+      <a class="pagination__link" href="{{ item.href }}">
+        <span class="visually-hidden">Page </span>{{ item.text }}
+      </a>
+    </li>
+    {% endif -%}
+    {% endif -%}
+    {% endfor -%}
+
+    {%- if params.next %}
+    <li class="pagination__item pagination__item--next">
+      <a class="pagination__link" href="{{ params.next.href }}">
+        <span class="pagination__link-title">
+          {{- icon("next") -}}
+          {%- if params.next.text %}{{ params.next.text -}}
+          {%- else %}Next<span class="visually-hidden"> page</span>
+          {%- endif -%}
+        </span>
+        {%- if params.next.label %}
+        <span class="pagination__link-divider visually-hidden">:</span>
+        <span class="pagination__link-label">{{ params.next.label }}</span>
+        {% endif -%}
+      </a>
+    </li>
+    {% endif -%}
+  </ul>
+
+  {%- if params.results %}
+  <p class="pagination__results">Showing <b>{{ params.results.from }}</b>{% if params.results.from != params.results.to %} to <b>{{ params.results.to }}</b>{%- endif %} of <b>{{ params.results.count }}</b> {{ type }}</p>
+  {% endif -%}
+</nav>
