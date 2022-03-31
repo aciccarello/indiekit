@@ -71,7 +71,11 @@
     "xo": "^0.48.0"
   },
   "ava": {
-    "workerThreads": false
+    "workerThreads": false,
+    "files": [
+      "packages/endpoint-media/tests/integration/200-files-view.js"
+    ],
+    "verbose": true
   },
   "c8": {
     "all": true,

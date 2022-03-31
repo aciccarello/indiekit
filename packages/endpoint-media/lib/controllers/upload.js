@@ -2,9 +2,11 @@ import httpError from "http-errors";
 import { media } from "../media.js";
 import { mediaData } from "../media-data.js";
 import { checkScope } from "../scope.js";
+import Debug from "debug";
 
-export const uploadController =
-  (publication) =>
+const debug = new Debug("indiekit:upload");
+
+export const uploadController = (publication) =>
   /**
    * Upload file
    *
@@ -16,6 +18,7 @@ export const uploadController =
   async (request, response, next) => {
     const { file } = request;
     const { scope } = request.session.token;
+    debug("scope", scope);
 
     try {
       checkScope(scope);

@@ -3,6 +3,9 @@ import got from "got";
 import HttpError from "http-errors";
 import jwt from "jsonwebtoken";
 import { getCanonicalUrl } from "../utils.js";
+import Debug from "debug";
+
+const debug = new Debug("indiekit:token");
 
 export const tokenController = (publication) => ({
   /**
@@ -18,24 +21,38 @@ export const tokenController = (publication) => ({
           .trim()
           .split(/\s+/)[1];
         const accessToken = jwt.verify(bearerToken, process.env.TOKEN_SECRET);
+        debug('accessToken', accessToken);
 
+        // Normalize publication and token URLs before comparing
+        const accessTokenMe = getCanonicalUrl(accessToken.me);
+        debug('accessTokenMe', accessTokenMe)
+        const publicationMe = getCanonicalUrl(publication.me);
+        debug('publicationMe', publicationMe)
+        const isAuthenticated = accessTokenMe === publicationMe;
+
+        // Publication URL does not match that provided by access token
+        if (!isAuthenticated) {
+          next(new HttpError(403, "User does not have permission to perform request"));
+        }
+
+        debug('request.headers', request.headers);
         if (
-          getCanonicalUrl(accessToken.me) === getCanonicalUrl(publication.me)
+          request?.headers?.accept &&
+          request.headers.accept.includes("application/json")
         ) {
-          if (
-            request?.headers?.accept &&
-            request.headers.accept.includes("application/json")
-          ) {
-            response.json(accessToken);
-          } else {
-            response.header(
-              "Content-Type",
-              "application/x-www-form-urlencoded"
-            );
-            response.send(new URLSearchParams(accessToken).toString());
-          }
+          debug('JSON response');
+          response.json(accessToken);
+        } else {
+          debug('URL encoded response');
+          response.header(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+          );
+          debug('URLSearchParams encoded response', new URLSearchParams(accessToken).toString());
+          response.send(new URLSearchParams(accessToken).toString());
         }
       } catch (error) {
+        debug('error', error);
         next(new HttpError(401, `JSON Web Token error: ${error.message}`));
       }
     } else {

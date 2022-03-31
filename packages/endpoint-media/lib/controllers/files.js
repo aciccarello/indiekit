@@ -53,9 +53,11 @@ export const filesController = (application, publication) => ({
   async view(request, response, next) {
     try {
       const { id } = request.params;
+      console.log('id', id)
       const file = await publication.media.findOne({
         _id: new mongodb.ObjectId(id),
       });
+      console.log('file', file)
 
       if (!file) {
         throw new HttpError(404, "No file was found with this UUID");
