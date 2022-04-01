@@ -1,0 +1,37 @@
+{
+  "name": "@indiekit/store-local",
+  "version": "0.3.0",
+  "description": "Store IndieWeb content to a local folder",
+  "keywords": [
+    "indiekit",
+    "indieweb",
+    "micropub",
+    "ftp"
+  ],
+  "homepage": "https://getindiekit.com",
+  "author": {
+    "name": "Paul Robert Lloyd",
+    "url": "https://paulrobertlloyd.com"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "bugs": {
+    "url": "https://github.com/getindiekit/indiekit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getindiekit/indiekit.git",
+    "directory": "packages/store-local"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}
