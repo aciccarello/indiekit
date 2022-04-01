@@ -32,6 +32,13 @@ export const postData = {
       const typeConfig = getPostTypeConfig(type, postTypes);
       properties["post-type"] = type;
 
+      if (!typeConfig) {
+        throw new HttpError(
+          501,
+          `Unable to find config for post type '${type}'`
+        );
+      }
+
       // Post paths
       const path = renderPath(typeConfig.post.path, properties, timeZone);
       const url = renderPath(typeConfig.post.url, properties, timeZone);
@@ -41,6 +48,9 @@ export const postData = {
       const postData = { path, properties };
       return postData;
     } catch (error) {
+      if (error instanceof HttpError) {
+        throw error;
+      }
       throw new HttpError(400, error);
     }
   },

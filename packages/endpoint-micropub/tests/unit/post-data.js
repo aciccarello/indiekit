@@ -66,6 +66,27 @@ test("Throws error creating post data without properties", async (t) => {
   });
 });
 
+test("Throws error creating post without type configuration", async (t) => {
+  const modifiedPublication = {
+    ...t.context.publication,
+    postTypes: [],
+  };
+  const properties = {
+    type: "entry",
+    published: "2020-07-26T20:10:57.062Z",
+    name: "Foo",
+    "mp-slug": "foo",
+  };
+
+  const error = await t.throwsAsync(
+    postData.create(modifiedPublication, properties),
+    {
+      message: "Unable to find config for post type 'note'",
+    }
+  );
+  t.is(error.statusCode, 501);
+});
+
 test("Reads post data", async (t) => {
   const result = await postData.read(t.context.publication, t.context.url);
 
